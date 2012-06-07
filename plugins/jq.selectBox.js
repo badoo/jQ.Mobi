@@ -9,7 +9,8 @@
         oldSelects: {},
         scroller: null,
         getOldSelects: function(elID) {
-            if ($.os.android && !$.os.androidICS)
+            
+            if (!$.os.android && !$.os.androidICS)
                return;
             if (!$.fn['scroller']) {
                 alert("This library requires jq.web.Scroller");
@@ -224,6 +225,7 @@
             var el = document.getElementById(elID);
             if (el) {
                 el.selectedIndex = value;
+                $(el).trigger("change");
             }
             this.scroller.scrollTo({
                 x: 0,

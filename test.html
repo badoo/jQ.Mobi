@@ -8,14 +8,16 @@
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 
 
-<link rel="stylesheet" type="text/css" href="kitchensink/jq.ui.css" title="default"/>
 <link rel="stylesheet" type="text/css" href="kitchensink/icons.css" /> 
+
+<link rel="stylesheet" type="text/css" href="kitchensink/jq.ui.css" title="default"/>
 
 <link rel="stylesheet"  type="text/css" href="kitchensink/jq.ui.carbon.css" title="carbon" disabled='true'/>
 <link rel="stylesheet"  type="text/css" href="kitchensink/jq.ui.eco.css" title="eco" disabled='true' />
 <link rel="stylesheet"  type="text/css" href="kitchensink/jq.ui.frosty.css" title="frosty" disabled='true'/>
 <link rel="stylesheet"  type="text/css" href="kitchensink/jq.ui.slate.css" title="slate" disabled='true'/>
 <link rel="stylesheet"  type="text/css" href="kitchensink/jq.ui.volcano.css" title="volcano" disabled='true' />
+
 
 <style>
 	.scrollBar{background:white;}
@@ -47,9 +49,8 @@
 <script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/xhr.js"></script> 	
 -->
 <script type="text/javascript" charset="utf-8" src="./jq.mobi.js"></script> 
-<!-- include jq.desktopBrowsers.js on desktop browsers only -->
+<!-- include touch.js on desktop browsers only -->
 <script>
-
 function loadedPanel(what){
     //We are going to set the badge as the number of li elements inside the target
 	$.ui.updateBadge("#jqmlink",$("#jqm").find("li").length);
@@ -63,7 +64,6 @@ script.src="plugins/jq.desktopBrowsers.js";
 var tag=$("head").append(script);
 $.os.android=true; //let's make it run like an android device
 $.os.desktop=true;
-
 }
 var oldElem="default";
 function setActiveStyleSheet(title) {
@@ -95,19 +95,20 @@ oldElem=document.getElementsByTagName("link")[0];
 </script>
 
 
-<script type="text/javascript" charset="utf-8" src="./plugins/jq.debug.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.swipe.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.template.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.carousel.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.drawer.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.shake.js"></script> 
 <script type="text/javascript" charset="utf-8" src="./plugins/jq.alphatable.js"></script> 
+
 <script type="text/javascript" charset="utf-8" src="./ui/jq.ui.js"></script> 
 
 <script type="text/javascript">
     /* This function runs once the page is loaded, but appMobi is not yet active */
 	var webRoot="./kitchensink/";
 	$.ui.autoLaunch=false;
+    $.ui.openLinksNewTab=false;
     var init = function(){
 	   $.ui.backButtonText="Back";  
 	   window.setTimeout(function(){$.ui.launch();},1500);
@@ -115,7 +116,8 @@ oldElem=document.getElementsByTagName("link")[0];
     };
     document.addEventListener("DOMContentLoaded",init,false);  
 	$.ui.ready(function(){console.log('ready');});
-
+   
+   
     /* This code is used to run as soon as appMobi activates */
     var onDeviceReady=function(){
 		AppMobi.device.setRotateOrientation("portrait");
@@ -151,12 +153,12 @@ oldElem=document.getElementsByTagName("link")[0];
         <span class='ui-icon ui-icon-loading spin'></span><h1 >Starting app</h1>
     </div>
     <div id="header">
-        <img id='badgephone' onclick='jq.ui.toggleSideMenu()' align="right" src='kitchensink/images/badge.png' style='padding-top:7px;padding-right:5px;'>
-        <img id='badgetablet' align="right" src='kitchensink/images/badge.png' style='padding-top:7px;padding-right:5px;'>
+        <img id='badgephone' onclick='jq.ui.toggleSideMenu()' align="right" src='kitchensink/images/badge.png' style='padding-top:10px'>
+        <img id='badgetablet' align="right" src='kitchensink/images/badge.png' style='padding-top:10px'>
     </div>
 
 <div id="content">
-	<div title='Welcome' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
+	<div title='Welcome' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home" >
 
 	<h2 class='expanded' onclick='showHide(this,"main_info");'>Welcome</h2>
 		<p id='main_info'>Welcome to the kitchen sink demo for jqMobi.  Here you will find samples of how to use the jqMobi libraries.  Please select an option from below.</p>
@@ -169,7 +171,8 @@ oldElem=document.getElementsByTagName("link")[0];
 
 	<!-- ------------------------------------------ -->
 	
-	<div title="jqMobi" id="jqm" class="panel" data-nav="menu_jqmobi">
+	<div title="jqMobi" id="jqm" class="panel" data-nav="menu_jqmobi" data-header="testheader">
+        <header><span>This is an inline header in a panel.  Below is an inline footer</span></header>
 		<h2 class='expanded' onclick='showHide(this,"jqmobi_info");'>jqMobi</h2>
 		<p id='jqmobi_info'>jqMobi is a blazingly fast query selector tool that is optmimized for HTML5 browsers.</p>
 
@@ -213,6 +216,9 @@ oldElem=document.getElementsByTagName("link")[0];
 		<li><a href="javascript:;" onClick="$.ui.scrollToTop('jqm')" >Go To Top</a></li>
 		</ul>
 		<br/><br/>
+         <footer >
+            <a href="#main" id='navbar_home' class='icon home' >Home <span class='jq-badge lr'>12</span></a>
+         </footer>
 	</div>
 
     <div id="jqmserialize" class="panel" title="$().serialize" data-nav="menu_jqmobi" >
@@ -614,24 +620,23 @@ oldElem=document.getElementsByTagName("link")[0];
 	<!-- jqUi -->
 	<div title="jqUi" id="jqmui" class="panel"  data-footer='footerui' data-tab="navbar_ui">
 
-		
-	<h2 class='expanded' onclick='showHide(this,"jqui_info");'>jqUi</h2><p id='jqui_info'>
-		jqUi is AppMobi's User Interface/User Experience library for mobile applications. It uses HTML5 and CSS3 for animations and transitions. sdf asdf asdf asd f sadf sadf s df sdf sd f sdf sdf s df sdf sd fs df sdf sdaf as df
+
+	<h2 class='expanded' onclick='showHide(this,"jqui_info");'>jqUi</h2><p id='jqui_info'>jqUi is AppMobi's User Interface/User Experience library for mobile applications. It uses HTML5 and CSS3 for animations and transitions.<br />
 	We built the kitchen sink using jqUi.  It is comprised of components from the jqPlugins library and additional features.
 	<br>
 		* Fixed navigation bar<br>
 		* Auto scrolling content panels<br>
 		* Optional footer to segment your application<br>
 		</p>
-		<ul style="height:10000px;">
+		<ul>
 		<li><a href="#jqmtransitions" >Transitions</a></li>
 		<li><a href="#jqmforms" >Form Styles</a></li>
 		<li><a href="#uiapi" >$.ui API</a></li>
 		<li><a href="#uifooter">Custom Footers</a></li>
 		<li><a href="#uiside">Side Navigation Menu</a></li>
         <li><a href="#uiicons">SVG Icons</a></li>
-		<li><a href="kitchensink/external.html" data-persist-ajax="true" data-refresh-ajax="true">Load External Content</a></li>
-        <li><a href="http://www.jqmobi.com" target="_blank">Open a new page</a></li>
+		<li><a href="kitchensink/external.html" data-persist-ajax="true" data-refresh-ajax="true" data-pull-scroller="true">Load External Content</a></li>
+        <li><a href="http://www.jqmobi.com" >Open a new page</a></li>
         <li><a href="#uidefer">Defer loading</a></li>
 		</ul>
 
@@ -812,6 +817,27 @@ oldElem=document.getElementsByTagName("link")[0];
 				<p><input type="checkbox" value="Other" id="otherdc" class="jq-ui-slider" disabled checked /> <label for="otherdc">Disabled</label></p>
 				
 			</fieldset>
+            
+            <fieldset>
+                <legend>HTML5 input</legend>
+                
+                <label for="date">Date</label><br/>
+				<input type="date" id="date" class='jq-ui-forms'/><br/>
+                
+                <label for="month">Month</label><br/>
+				<input type="month" id="month" class='jq-ui-forms'/><br/>
+                
+                <label for="datetime">Date/Time</label><br/>
+				<input type="datetime" id="datetime" class='jq-ui-forms'/><br/>
+                
+                <label for="datetime-local">Date/Time Local</label><br/>
+				<input type="datetime-local" id="datetime-local" class='jq-ui-forms'/><br/>
+                
+                <label for="time">Time</label><br/>
+				<input type="time" id="time" class='jq-ui-forms'/><br/>
+                
+                <label for="range">Range</label><br/>
+				<input type="range" id="range" class='jq-ui-forms'/><br/>
 			
 		</form>
 		<br><br><br>
@@ -838,7 +864,7 @@ oldElem=document.getElementsByTagName("link")[0];
 		<li><a href="#uigoback">.goBack()</a></li>
 		<li><a href="#uiclearhistory">.clearHistory()</a></li>
 		<li><a href="#uiaddcontentdiv">.addContentDiv ()</a></li>
-		<li><a href="#uiupdateanchors">.updateAnchors() </a></li>
+		
 		<li><a href="#uisettitle">.setTitle(text) </a></li>
 		<li><a href="#uisetbackbutton">.setBackButtonText() </a></li>
 		<li><a href="#uishowmask">.showMask() </a></li>
@@ -945,13 +971,7 @@ oldElem=document.getElementsByTagName("link")[0];
 
 
 	</div>
-	<div id="uiupdateanchors" title="Update Anchors" class="panel" data-footer='footerui'>
-	This will loop through content and parse any anchors to automagically wire them.<br>
-	<pre>
-	$.ui.updateAnchors(div,resetHistory)
-	</pre>
-	</div>
-
+	
 	<div id="uisettitle" title="Set Title" class="panel" data-footer='footerui'>
 	This will set the page title of the current page programatically.  It will not be retained.
 	<pre>
@@ -1070,7 +1090,7 @@ oldElem=document.getElementsByTagName("link")[0];
 
 	<!-- ------------------------------------------ -->
 	<!-- jqPlugins -->
-	<div title="jqPlugins" id="jqmweb" class="panel">
+	<div title="jqPlugins" id="jqmweb" class="panel" data-header="testheader">
 	<h2 class='expanded' onclick='showHide(this,"jqweb_info");'>jqPlugins</h2><p id='jqweb_info'>
 		This is our plugin library of widgets to assist you with developing mobile applications.  Some of these are used in jqUi.</p>
 		<ul>
@@ -1090,24 +1110,23 @@ oldElem=document.getElementsByTagName("link")[0];
 	</div>
 
 	<!-- jqPlugins > jQ.scroller -->
-	<div title="Scroller" class="panel" id="webslider" style="overflow:hidden;">
+	<div title="Scroller" class="panel" id="webslider" scrolling="no">
 	<script>
 		var init_scroller = function () {
 		   $("#scroller").scroller({
-			    refresh:true,
 				scrollBars: true,
 				verticalScroll: true,
 				horizontalScroll: false,
 				vScrollCSS: "jqmScrollbar",
 				hScrollCSS: "jqmScrollbar"
-			}).enable();
+			});
 		};
 		window.addEventListener("load", init_scroller, false);
 	</script>
 	<div id="outercontent"
 			style="height: 95%; width:95%; overflow: hidden; position: relative">
 			
-			<div id="scroller" style="overflow: auto;"><div>Lorem ipsum dolor sit amet, consectetur
+			<div id="scroller"><div>Lorem ipsum dolor sit amet, consectetur
 				adipiscing elit. Duis porta, lorem sit amet feugiat lacinia, mi dui
 				sodales eros, id lacinia mauris urna eu est. Proin pulvinar, augue
 				sed convallis elementum, magna diam pharetra magna, id vestibulum est
@@ -1431,7 +1450,7 @@ oldElem=document.getElementsByTagName("link")[0];
 	</div>
 
 	<!-- jqPlugins > jQ.carousel -->
-	<div title="Carousel" class="panel" id="webcarousel"  style="overflow:hidden;">
+	<div title="Carousel" class="panel" id="webcarousel"  scrolling="no">
 		<style>
 		.carousel_paging2 {
 			border-radius: 10px;
@@ -1505,7 +1524,7 @@ oldElem=document.getElementsByTagName("link")[0];
 	</div>
 
 	<!-- jqPlugins > jQ.swipeListener -->
-	<div title="Swipe" class="panel" id="webswipe" style="overflow:hidden;">
+	<div title="Swipe" class="panel" id="webswipe" scrolling="no">
 		<style>
 			.result {position:absolute;left:100px;}
 		</style>
@@ -1645,7 +1664,7 @@ oldElem=document.getElementsByTagName("link")[0];
 	</div>
 
 	<!-- jqPlugins > jQ.css3animate -->
-	<div title="Animate" class="panel" id="webanimate" style="overflow:hidden;">
+	<div title="Animate" class="panel" id="webanimate" scrolling="no">
 		<script>
 			function moveOnce() {
 				$("#animate").css3Animate({
@@ -1711,7 +1730,7 @@ oldElem=document.getElementsByTagName("link")[0];
 	<!-- ------------------------------------------ -->
 
 	<!-- jqPlugins > jQ.drawer -->
-	<div title="Drawer" class="panel" id="webdrawer" style="overflow:hidden;">
+	<div title="Drawer" class="panel" id="webdrawer" scrolling="no">
 	<br><br>
 	<p>a pulldown tool like the notifications bar</p>
 	<div id="drawer" style="position:relative;top:-270px;height:220px;background:black;width:100%;z-index:100">
@@ -1808,7 +1827,7 @@ oldElem=document.getElementsByTagName("link")[0];
 	</div>
     
     <!-- jqPlugins -> jqAlphaTable-->
-    <div title="Alpha Table" class="panel" id="webalphatable" style="overflow:hidden;">
+    <div title="Alpha Table" class="panel" id="webalphatable" scrolling="no">
     <style>
     #contentDIV .alphaItem {padding:5px;}
     #contentDIV .alphaItem:nth-child(even) {background: #CCC}
@@ -1869,7 +1888,6 @@ oldElem=document.getElementsByTagName("link")[0];
 	window.addEventListener("load",function(){
 	$("#contentDIV").scroller({});  
 	$("#contentDIV").alphatable($("#contentDIV").scroller(),{listCssClass:"tableListContainer",prefix:"itm_anchor_"});
-	
     },false);
 	</script>
     <style>
@@ -1887,8 +1905,7 @@ oldElem=document.getElementsByTagName("link")[0];
 <!-- ------------------------------------------ -->
 <!-- navbar -->
 <!-- navbar -->
-<div id="navbar">
-	<div class="horzRule"></div>
+<div id="navbar" style='margin: 0;float:left;'>
     <a href="#main" id='navbar_home' class='icon home' >home <span class='jq-badge lr'>3</span></a>
     <a href="#jqm" id='navbar_js' class="icon target" >selectors</a>
     <a href="#jqmui" id='navbar_ui'  class="icon picture" >ui</a>
@@ -1896,7 +1913,6 @@ oldElem=document.getElementsByTagName("link")[0];
 </div>
 
  <footer id='footerui'>
-	 <div class="horzRule"></div>
       <a href="#main" id='navbar_home' class='icon home' >Home <span class='jq-badge lr'>6</span></a>
       <a href="#jqmtransitions" id='navbar_js' class="icon stack" >Trans</a>
 	  <a href="#jqmui" id='navbar_ui'  class="icon picture" >ui</a>
@@ -1904,12 +1920,16 @@ oldElem=document.getElementsByTagName("link")[0];
 	  
 </footer>
  <footer id='footerui2'>
-	 <div class="horzRule"></div>
-  <a href="#main" id='navbar_home' class='icon home' >Home <span class='jq-badge lr'>6</span></a>
+      <a href="#main" id='navbar_home' class='icon home' >Home <span class='jq-badge lr'>6</span></a>
       <a href="#jqmtransitions" id='navbar_js' class="icon stack" >Trans</a>
 	  <a href="#jqmui" id='navbar_ui'  class="icon picture" >ui</a>
 	  <a href="#uiapi" id='navbar_plugins'  class="icon info" >api</a>
 </footer>	
+
+<header id="testheader">
+    <a id="backButton" onclick="$.ui.goBack()" class='button' style='left:0px;left:auto;overflow:hidden'>Go Back</a>
+    <h1>Custom Header</h1>
+</header>
 <!-- ------------------------------------------ -->
 <nav>
    <div class='title'>Home</div>

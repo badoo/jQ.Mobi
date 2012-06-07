@@ -126,6 +126,8 @@
 		onResize:function(e){
 			//this.log("onResize");
 			if( $.trigger(this, "resize", [e]) && !jq.os.ios ){
+                if(document.body.clientWidth>=700)
+                    $.ui.toggleSideMenu(false);
 				window.setTimeout(this.hideAddressBarProxy_, 250);
 			}
 		},
