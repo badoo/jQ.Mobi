@@ -643,12 +643,17 @@ test("prepend",function(){
   QUnit.reset();
   var arr=[];
   arr.push(jq("<div>something</div>").get());
-  arr.push(jq("<div>something</div>").get());
+  arr.push(jq("<div>something 2</div>").get());
   $("#foo").html("");
   $("#foo").prepend(arr);
   
-  equals($("#foo").html(),"<div>something</div><div>something</div>","Prepending multiple objects at once");
+  equals($("#foo").html(),"<div>something</div><div>something 2</div>","Prepending multiple objects at once");
   QUnit.reset();
+  $("#foo").html("");
+  $("#foo").prepend("<b>1</b><b>2</b>");
+  equals($("#foo").html(),"<b>1</b><b>2</b>","Pending objects with the order staying the same ");
+  QUnit.reset();
+  
 });
 test("insertBefore",function(){
 
@@ -1171,6 +1176,13 @@ test("ajax",function(){
     stop();
 	
 	$.ajax({url:"server.php?data=foo",success:function(data){equals(data,"foo");start()}});
+});
+
+test("ajax sync",function(){
+    
+	var fixer=0;
+	$.ajax({url:"server.php?data=foo",async:false,success:function(data){fixer=1}});
+    equals(fixer,1);
 });
 
 test("jsonp",function(){

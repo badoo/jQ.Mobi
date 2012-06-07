@@ -30,6 +30,34 @@ if (!window.jq || typeof (jq) !== "function") {
         
 
         /**
+         * internal function to use domfragments for insertion
+         *
+         * @api private
+        */
+        function _insertFragments(jqm,container,insert){
+            var frag=document.createDocumentFragment();
+            if(insert){
+                for(var j=jqm.length-1;j>=0;j--)
+                {
+                    frag.insertBefore(jqm[j],frag.firstChild);
+                }
+                container.insertBefore(frag,container.firstChild);
+            
+            }
+            else {
+            
+                for(var j=0;j<jqm.length;j++)
+                    frag.appendChild(jqm[j]);
+                container.appendChild(frag);
+            }
+            frag=null;
+        }
+                
+            
+                    
+        
+
+        /**
          * Internal function to test if a class name fits in a regular expression
          * @param {String} name to search against
          * @return {Boolean}
@@ -157,13 +185,16 @@ if (!window.jq || typeof (jq) !== "function") {
         function _selector(selector, what) {
             var dom;
 
-			selector=selector.trim();
+		//	selector=selector.trim();
             if (selector[0] === "#" && selector.indexOf(" ") === -1 && selector.indexOf(">") === -1) {
                 if (what == document)
                     dom = what.getElementById(selector.replace("#", ""));
                 else
-                    dom = [].slice.call(_selectorAll(selector, what));
-            } else if (selector[0] === "<" && selector[selector.length - 1] === ">")  //html
+                        dom = [].slice.call(what.querySelectorAll(selector));
+                    return dom;
+                } 
+                selector=selector.trim();
+                if (selector[0] === "<" && selector[selector.length - 1] === ">")  //html
             {
                 var tmp = document.createElement("div");
                 tmp.innerHTML = selector.trim();
@@ -822,8 +853,7 @@ if (!window.jq || typeof (jq) !== "function") {
                 for (i = 0; i < this.length; i++) {
                     if (element.length && typeof element != "string") {
                         element = $(element);
-                        for (var j = 0; j < element.length; j++)
-                            insert != undefined ? this[i].insertBefore(element[j], this[i].firstChild) : this[i].appendChild(element[j]);
+                        _insertFragments(element,this[i],insert);
                     } else {
                         var obj =fragementRE.test(element)?$(element):undefined;
                         if (obj == undefined || obj.length == 0) {
@@ -832,10 +862,7 @@ if (!window.jq || typeof (jq) !== "function") {
                         if (obj.nodeName != undefined && obj.nodeName.toLowerCase() == "script" && (!obj.type || obj.type.toLowerCase() === 'text/javascript')) {
                             window.eval(obj.innerHTML);
                         } else if(obj instanceof $jqm) {
-                            for(var k=0;k<obj.length;k++)
-                            {
-                                insert != undefined ? this[i].insertBefore(obj[k], this[i].firstChild) : this[i].appendChild(obj[k]);
-                            }
+                            _insertFragments(obj,this[i],insert);
                         }
                         else {
                             insert != undefined ? this[i].insertBefore(obj, this[i].firstChild) : this[i].appendChild(obj);
@@ -1266,6 +1293,9 @@ if (!window.jq || typeof (jq) !== "function") {
                 if (!settings.headers)
                     settings.headers = {};
                
+                if(!('async' in settings)||settings.async!==false)
+                    settings.async=true;
+                
                 if (!settings.dataType)
                     settings.dataType = "text/html";
                 else {
@@ -1343,7 +1373,7 @@ if (!window.jq || typeof (jq) !== "function") {
                         settings.complete.call(context, xhr, error ? 'error' : 'success');
                     }
                 };
-                xhr.open(settings.type, settings.url, true);
+                xhr.open(settings.type, settings.url, settings.async);
                 
                 if (settings.contentType)
                     settings.headers['Content-Type'] = settings.contentType;
