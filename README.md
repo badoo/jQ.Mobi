@@ -86,7 +86,7 @@ var myDiv=$("<div id='foo'>") //Creates a div object and returns it
 
 ``` js
 
-.get(url,callback) //Makes an Ajax request to the URL and executes the callback funtion with the result
+.get(url,callback) //Makes an Ajax request to the URL and executes the callback function with the result
 .post(url,data,callback,dataType) //Makes an Ajax POST request to the URL with the data and executes the callback with the result.  An optional dataType can be passed in, as some webservices require the header
 .getJSON(url,data,callback) //Makes an ajax request with the data and executes callback function passing in a JSON object from the Ajax response into the callback function.
 ```
@@ -110,7 +110,7 @@ If the url contains the pattern =? in it, a jsonP request will be made.  These c
 # jqMobi Helper calls
 ``` js
 .param() //Serialize a JSON object into KVP for a querystring
-.parseJSON(string) //Backwards compatability JSON parsing call.  Uses the browsers native JSON parser
+.parseJSON(string) //Backwards compatibility JSON parsing call.  Uses the browsers native JSON parser
 .parseXML(string) //Parses a string and returns a XML document version
 ```
 
